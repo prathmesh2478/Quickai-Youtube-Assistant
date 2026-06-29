@@ -1,78 +1,96 @@
-1. Overall Architecture (Modular Monolith)
+# QuickAI — YouTube AI Learning Assistant & Dashboard 
 
-Tech Stack: MERN Stack (MongoDB, Express.js, React.js, Node.js).
+QuickAI is a powerful, production-ready developer platform designed to supercharge your learning workflow on YouTube. Built as a **Modular Monolith Architecture** using the **MERN Stack**, it features a cross-origin synchronized **Chrome Extension (Manifest V3)** and an interactive **Web Dashboard**. 
 
-Design Pattern: Layered MVC architecture separating routes, controllers, and services, making the backend highly scalable and ready for future microservice extraction.
+The platform turns passive video consumption into active learning by combining state-of-the-art Generative AI with advanced data-processing pipelines.
 
-Database: MongoDB tracks user profiles, standard generation history, complex study sessions, and stateful chat memory.
+---
 
-2. Security & Authentication
+##  Core Features
 
-Custom Authentication: A built-from-scratch, stateless JWT (JSON Web Token) system combined with bcrypt for password hashing.
+###  The YouTube AI Chrome Extension (Core USP)
+*   **Single-Shot Summarization:** Extracts closed captions or scrapes transcripts directly from the YouTube DOM to generate structured, markdown-formatted summaries instantly.
+*   **Stateful Conversational Agent:** Injects an interactive chat UI directly onto the YouTube viewing page. Users can hold a persistent, back-and-forth Q&A session with an AI agent trained entirely on the video's context.
+*   **Intelligent Token-Chunking Pipeline:** Seamlessly bypasses API token limitations for long videos (30+ minutes). A robust backend algorithm splits long transcripts into logical 2-minute segments, processes them iteratively, and compiles extensive, textbook-style notes.
+*   **Dynamic Flowchart Visualization:** Automatically extracts architectural logic from video notes and dynamically renders structural **Mermaid.js** charts to visualize complex, nested workflows.
 
-Cross-Origin Syncing: The authentication state is securely shared between the main React web dashboard and the Chrome Extension, allowing seamless API requests from either client.
+###  Web Dashboard & Developer Tooling
+*   **Cross-Origin Stateful Authentication:** A custom-built, stateless **JWT & bcrypt system** that seamlessly shares authentication states between the React Web Dashboard and the background service workers of the Chrome Extension.
+*   **AI Resume Reviewer:** Multi-part file handling (**Multer**) allows users to upload PDF resumes securely to Cloudinary, parsing layout text to generate constructive AI analysis and career optimization strategies.
+*   **Advanced Image Manipulation:** Integrates native **Gemini Image Generation** alongside industry-standard AI pipelines for automated background removal and object erasing.
 
-3. Standard Web Dashboard Features
+---
 
-AI Tooling: Integration with Google Gemini API, Cloudinary, and Remove.bg.
+##  Tech Stack & Architecture
 
-Capabilities: Users can generate articles and blog titles, create AI images, remove image backgrounds/objects, and upload PDF resumes (handled via Multer) for AI-driven feedback.
+### Backend (Modular Monolith)
+*   **Runtime Environment:** Node.js & Express.js (Layered MVC Architecture: Routes ➡️ Controllers ➡️ Services)
+*   **Database:** MongoDB Atlas (Mongoose ODM tracking analytical user profiles, study sessions, and persistent chat history)
+*   **Authentication:** Stateless JWT (JSON Web Tokens) + Bcrypt Password Hashing
+*   **Integrations:** Google Gemini API, Cloudinary SDK, Remove.bg API, Multer, Unpdf
 
-4. The YouTube AI Chrome Extension (Core USP)
-The extension extracts YouTube video transcripts and interfaces with the backend to provide three major features:
+### Chrome Extension (Vite + Vanilla/React Contexts)
+*   **Manifest Specification:** Manifest V3
+*   **Build Tool:** Vite + Rollup Optimization
+*   **DOM Scraping:** Custom MutationObserver tracking YouTube SPA navigation for reliable transcript extraction.
+*   **UI Injector:** High-isolation CSS scoping preventing YouTube style leaks into the custom overlay layout.
 
-Summarize (Single-Shot): Sends the transcript to the backend for a quick, one-off Gemini API call to generate a brief video overview.
+---
 
-Conversation (Stateful Agent): Injects a chat UI onto the YouTube page. The backend uses the transcript as context and stores ongoing message history in MongoDB, allowing users to have persistent, back-and-forth Q&A sessions with the video content.
+##  Project Structure
 
-Detailed Notes (Chunking Pipeline): The backend algorithm splits long (30+ minute) video transcripts into 2-minute segments to bypass API token limits. It iterates through these chunks to generate expansive, textbook-style notes and dynamically renders Mermaid.js diagrams on the frontend to visualize complex topics.
+```text
+├── server/                 # Layered Express.js Backend Monolith
+│   ├── src/
+│   │   ├── config/         # Database, Gemini, and Cloudinary configurations
+│   │   ├── controllers/    # Request handlers (Auth, Document, Image, YouTube)
+│   │   ├── middlewares/    # Custom JWT protection & file upload interceptors
+│   │   ├── models/         # Mongoose Schemas (User, StudySession, ChatHistory)
+│   │   ├── routes/         # Clean REST Endpoints
+│   │   └── services/       # Core Business Logic (Chunking pipelines & AI interaction)
+│   ├── server.js           # Server Initialization
+│   └── package.json
+│
+└── extension/              # Manifest V3 Chrome Extension Monorepo
+    ├── public/             # Extension manifests and asset icons
+    ├── src/
+    │   ├── background/     # Background service worker (API agent & Token storage)
+    │   ├── content/        # YouTube DOM parser, chat injector & style engines
+    │   ├── popup/          # UI login and local session management dashboard
+    │   └── utils/          # DOM helpers and background communications
+    ├── build.js            # Custom production compiling script
+    └── vite.config.js       # Rollup engine setup
 
 
+Getting Started Locally
 
+1. Clone and Configure the Server
+Navigate to the server directory and create your .env file matching this template:
+PORT=5000
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_secure_jwt_secret
+GEMINI_API_KEY=your_google_gemini_api_key
+REMOVEBG_API_KEY=your_remove_bg_api_key
+CLOUDINARY_CLOUD_NAME=your_cloudinary_name
+CLOUDINARY_API_KEY=your_cloudinary_key
+CLOUDINARY_API_SECRET=your_cloudinary_secret
 
+Install packages and boot up the development server:
+cd server
+npm install
+npm run server
 
+2. Build and Load the Extension
+Navigate to the extension directory to install dependencies and compile the production bundle:
+cd extension
+npm install
+npm run build
 
-Phase 1: Backend Architecture & Database Initialization
-Step 1: Initialize the Node.js project, set up environment variables, and create your modular monolith folder structure (Routes, Controllers, Services, Middlewares).
+To load into your browser:
 
-Step 2: Connect to MongoDB Atlas and write the Mongoose schemas (User, StudySession, ChatHistory).
+1. Open Chrome and head to chrome://extensions/.
+2. Toggle on Developer mode (top-right corner).
+3. Click Load unpacked in the top-left.
+4. Select the compiled extension/dist folder.
+5. Head to any YouTube video, register/log in via the Extension popup, and start learning!
 
-Step 3: Build the custom stateless JWT authentication system. This includes password hashing with bcrypt in the auth.service.js and cookie/header management.
-
-Step 4: Set up the global error handler and the authentication middleware to protect future API routes.
-
-Phase 2: React Dashboard & Standard AI Tools
-Step 1: Initialize the React application using Vite, configure Tailwind CSS, and set up your routing architecture.
-
-Step 2: Build the AuthContext to manage the JWT state on the frontend, ensuring users stay logged in across sessions.
-
-Step 3: Develop the foundational UI components (Sidebar, Dashboard layout) and build the forms for the standard AI tools.
-
-Step 4: Integrate Cloudinary and Multer for handling file uploads (PDFs and images). Connect the Google Gemini API to handle standard, single-shot content generation.
-
-Phase 3: Core AI Business Logic (Web Environment)
-Step 1: Develop the chunking algorithm (transcript.service.js) in your backend to safely pass large text inputs to the Gemini API without exceeding token limits.
-
-Step 2: Implement the stateful conversational agent logic. Your backend needs to read the current context, query the Gemini API, and append the Q&A to the ChatHistory collection in MongoDB.
-
-Step 3: Build the frontend renderers. Create the MarkdownViewer.jsx for clean text formatting and integrate mermaid.js to render complex diagrams dynamically from the AI's output.
-
-Step 4: Test this entire pipeline inside your React web app using mock YouTube transcripts or large text blocks to ensure the heavy AI logic is flawless before touching the extension.
-
-Phase 4: The Chrome Extension
-Step 1: Create the extension folder structure and configure the manifest.json (Manifest V3) with the correct permissions for YouTube and local storage.
-
-Step 2: Write the scraper.js content script to successfully navigate the YouTube DOM and extract the closed captions/transcript data.
-
-Step 3: Implement cross-origin authentication so your background worker can securely grab the JWT from your React web dashboard, authenticating the user inside the extension.
-
-Step 4: Inject your React-based chat UI into the YouTube page and connect it to the youtube.routes.js endpoints on your backend.
-
-Phase 5: Polish & Deployment
-Step 1: Conduct end-to-end testing. Handle edge cases like YouTube videos with disabled captions or API rate limits.
-
-Step 2: Deploy your Node.js backend to a cloud provider (e.g., Render) and ensure your MongoDB Atlas is configured for production access.
-
-Step 3: Deploy your Vite React frontend to a global CDN (e.g., Vercel or Netlify).
-
-Step 4: Create high-quality architecture diagrams and write a comprehensive README.md to finalize this as a premium portfolio piece.
