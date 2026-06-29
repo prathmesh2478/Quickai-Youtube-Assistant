@@ -1,0 +1,19 @@
+{
+  "name": "quickai-extension",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "node build.js",
+    "clean": "rm -rf dist",
+    "dev": "node build.js --watch"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.0.0",
+    "fs-extra": "^11.1.1",
+    "vite": "^4.5.14"
+  },
+  "dependencies": {
+    "marked": "^17.0.5",
+    "mermaid": "^11.13.0"
+  }
+}
