@@ -62,7 +62,7 @@ The platform turns passive video consumption into active learning by combining s
     └── vite.config.js       # Rollup engine setup
 
 
-Getting Started Locally
+## Getting Started Locally
 
 1. Clone and Configure the Server
 Navigate to the server directory and create your .env file matching this template:
