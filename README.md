@@ -1,4 +1,4 @@
-# QuickAI — YouTube AI Learning Assistant & Dashboard 🚀
+# QuickAI — YouTube AI Learning Assistant & Dashboard 
 
 QuickAI is a powerful, production-ready developer platform designed to supercharge your learning workflow on YouTube. Built as a **Modular Monolith Architecture** using the **MERN Stack**, it features a cross-origin synchronized **Chrome Extension (Manifest V3)** and an interactive **Web Dashboard**. 
 
