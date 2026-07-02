@@ -40,23 +40,40 @@ The platform turns passive video consumption into active learning by combining s
 ##  Project Structure
 
 ```text
-├── server/                 # Layered Express.js Backend Monolith
+├── client/                     # React Frontend Web Dashboard
+│   ├── public/                 # Static web assets & favicons
 │   ├── src/
-│   │   ├── config/         # Database, Gemini, and Cloudinary configurations
-│   │   ├── controllers/    # Request handlers (Auth, Document, Image, YouTube)
-│   │   ├── middlewares/    # Custom JWT protection & file upload interceptors
-│   │   ├── models/         # Mongoose Schemas (User, StudySession, ChatHistory)
-│   │   ├── routes/         # Clean REST Endpoints
-│   │   └── services/       # Core Business Logic (Chunking pipelines & AI interaction)
-│   ├── server.js           # Server Initialization
-│   └── package.json
+│   │   ├── assets/             # Frontend UI images and styling graphics
+│   │   ├── components/         # Reusable UI components (Navbar, Sidebar, Loaders)
+│   │   ├── context/            # React Context API for global state (Auth, UI)
+│   │   ├── pages/              # View screens (Dashboard, ResumeReview, NoteView)
+│   │   ├── App.jsx             # Main Application component & client router
+│   │   └── main.jsx            # React DOM Initialization
+│   ├── index.html              # Core single-page entry layout
+│   ├── package.json            # Frontend script dependencies
+│   └── vite.config.js          # Client Vite compiler config
 │
-└── extension/              # Manifest V3 Chrome Extension Monorepo
-    ├── public/             # Extension manifests and asset icons
+├── extension/                  # Manifest V3 Chrome Extension Monorepo
+│   ├── public/                 # Extension manifests, badges, and asset icons
+│   ├── src/
+│   │   ├── background/         # Service worker tracking API tokens & Auth sync
+│   │   ├── content/            # YouTube DOM MutationObserver & custom Chat Overlay UI
+│   │   ├── popup/              # Standalone login extension overlay dashboard
+│   │   └── utils/              # Platform message brokers & DOM extraction tools
+│   ├── build.js                # Custom isolated distribution pipeline script
+│   ├── package.json            # Extension development dependencies
+│   └── vite.config.js          # Rollup bundling engine properties
+│
+└── server/                     # Layered Express.js Backend Monolith
     ├── src/
-    │   ├── background/     # Background service worker (API agent & Token storage)
-    │   ├── content/        # YouTube DOM parser, chat injector & style engines
-    │   ├── popup/          # UI login and local session management dashboard
-    │   └── utils/          # DOM helpers and background communications
-    ├── build.js            # Custom production compiling script
-    └── vite.config.js      # Rollup engine setup
+    │   ├── config/             # Connection pooling configurations (MongoDB, Gemini, Cloudinary)
+    │   ├── controllers/        # Request controllers (Auth, Document parsing, AI workflows)
+    │   ├── middlewares/        # Custom Route interceptors (JWT claims guard & Multer)
+    │   ├── models/             # Mongoose schemas (User records, Sessions, Prompt history)
+    │   ├── routes/             # Isolated Router mounting layers
+    │   └── services/           # Heavy processing core (Token-chunking engine & Gemini logic)
+    ├── uploads/                # Volatile memory disk layer for incoming files/resumes
+    ├── .env.example            # Blank variables checklist blueprint
+    ├── .gitignore              # Local secrets filter mapping
+    ├── package.json            # Node backend pipeline dependencies
+    └── server.js               # Application Entry point & Express boot listener
