@@ -1,4 +1,6 @@
-# QuickAI — YouTube AI Learning Assistant & Dashboard 
+# QuickAI — YouTube AI Learning Assistant & Dashboard 🚀
+
+[![Watch the Demo Video](https://img.shields.io/badge/Watch-Demo%20Video-red?style=for-the-badge&logo=youtube&logoColor=white)](https://drive.google.com/file/d/1o2GVcFo3v2m6ey0KtP0hEVnd5BepZqMT/view?usp=sharing)
 
 QuickAI is a powerful, production-ready developer platform designed to supercharge your learning workflow on YouTube. Built as a **Modular Monolith Architecture** using the **MERN Stack**, it features a cross-origin synchronized **Chrome Extension (Manifest V3)** and an interactive **Web Dashboard**. 
 
@@ -6,22 +8,22 @@ The platform turns passive video consumption into active learning by combining s
 
 ---
 
-##  Core Features
+## 🌟 Core Features
 
-###  The YouTube AI Chrome Extension (Core USP)
+### 🎬 The YouTube AI Chrome Extension (Core USP)
 * **Single-Shot Summarization:** Extracts closed captions or scrapes transcripts directly from the YouTube DOM to generate structured, markdown-formatted summaries instantly.
 * **Stateful Conversational Agent:** Injects an interactive chat UI directly onto the YouTube viewing page. Users can hold a persistent, back-and-forth Q&A session with an AI agent trained entirely on the video's context.
 * **Intelligent Token-Chunking Pipeline:** Seamlessly bypasses API token limitations for long videos (30+ minutes). A robust backend algorithm splits long transcripts into logical 2-minute segments, processes them iteratively, and compiles extensive, textbook-style notes.
 * **Dynamic Flowchart Visualization:** Automatically extracts architectural logic from video notes and dynamically renders structural **Mermaid.js** charts to visualize complex, nested workflows.
 
-###  Web Dashboard & Developer Tooling
+### 💻 Web Dashboard & Developer Tooling
 * **Cross-Origin Stateful Authentication:** A custom-built, stateless **JWT & bcrypt system** that seamlessly shares authentication states between the React Web Dashboard and the background service workers of the Chrome Extension.
 * **AI Resume Reviewer:** Multi-part file handling (**Multer**) allows users to upload PDF resumes securely to Cloudinary, parsing layout text to generate constructive AI analysis and career optimization strategies.
 * **Advanced Image Manipulation:** Integrates native **Gemini Image Generation** alongside industry-standard AI pipelines for automated background removal and object erasing.
 
 ---
 
-##  Tech Stack & Architecture
+## 🛠️ Tech Stack & Architecture
 
 ### Backend (Modular Monolith)
 * **Runtime Environment:** Node.js & Express.js (Layered MVC Architecture: Routes ➡️ Controllers ➡️ Services)
@@ -37,7 +39,7 @@ The platform turns passive video consumption into active learning by combining s
 
 ---
 
-##  Project Structure
+## 📂 Project Structure
 
 ```text
 ├── client/                     # React Frontend Web Dashboard
